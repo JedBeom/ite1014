@@ -39,6 +39,11 @@ def printCheeseStatus(cheese, chosen):
     print("Current cheese status : ", getEatenCheese(cheese, chosen))
 
 l = int(input("Input the length of the string : "))
+
+if l < 10 or l > 30:
+    print("Refer to the restriction, your input was changed to 10.")
+    l = 10
+
 cheese = getRandomString(l)
 print("Generated Cheese is '"+cheese+"'")
 print("Mouse starts eating!!")
