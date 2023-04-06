@@ -15,6 +15,11 @@ import random
 
 =========
 
+ |
+ |
+ |
+ Y
+
   +---+
 
   |   |
@@ -29,30 +34,33 @@ import random
 
 =========
 
-0 face
+0 head
 1 body
-2 leftHand
-3 rightHand
+2 leftArm
+3 rightArm
 4 leftLeg
 5 rightLeg
 """
 
-# itrue = return str if true
-def itrue(s, condition):
+def returnStrIfTrue(s, condition):
     if condition:
         return s
     return " "
 
-def picMaker(codes):
-    form = f"""  +---+
+# shorten function name
+rst = returnStrIfTrue
+
+def drawMan(codes):
+    form = f"""
+  +---+
 
   |   |
 
-  {itrue("O", 0 in codes)}   |
+  {rst("O", 0 in codes)}   |
 
- {itrue("/", 2 in codes)}{itrue("|", 1 in codes)}{itrue(chr(92), 3 in codes)}  |
+ {rst("/", 2 in codes)}{rst("|", 1 in codes)}{rst(chr(92), 3 in codes)}  |
 
- {itrue("/", 4 in codes)} {itrue(chr(92), 5 in codes)}  |
+ {rst("/", 4 in codes)} {rst(chr(92), 5 in codes)}  |
 
       |
 
@@ -76,7 +84,7 @@ displayOrder = list(range(6))
 random.shuffle(displayOrder)
 
 def displayBoard(missedLetters, correctLetters, secretWord, secretCategory):
-    print(picMaker(displayOrder[:len(missedLetters)]))
+    print(drawMan(displayOrder[:len(missedLetters)]))
     print()
     print("Hint Category:", secretCategory)
     print('Missed letters:', end=' ')
@@ -84,7 +92,6 @@ def displayBoard(missedLetters, correctLetters, secretWord, secretCategory):
     for letter in missedLetters:
         print(letter, end=' ')
     print()
-
 
     blanks = '_' * len(secretWord)
 
@@ -148,7 +155,7 @@ while True:
         missedLetters = missedLetters + guess
         # Check if player has guessed too many times and lost
 
-        if len(missedLetters) == len(displayOrder) - 1:
+        if len(missedLetters) == len(displayOrder):
             displayBoard(missedLetters, correctLetters, secretWord, secretCategory)
             print('You have run out of guesses!\nAfter ' + str(len(missedLetters)) + ' missed guesses and ' + str(len(correctLetters)) + ' correct guesses, the word was "' + secretWord + '"')
             gameIsDone = True
