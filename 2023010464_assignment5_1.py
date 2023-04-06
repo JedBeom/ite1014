@@ -168,7 +168,7 @@ while True:
             missedLetters = ''
             correctLetters = ''
             gameIsDone = False
-            secretCategory, secretWord = getRandomWord(words)
+            secretCategory, secretWord = getRandomCategoryAndWord(words)
 
         else:
             break
