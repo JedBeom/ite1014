@@ -15,9 +15,6 @@ int main() {
 		for (star=0; star<(2*j+1); star++) {
 			printf("*");
 		}
-		for (blank=0; blank<(4-j); blank++) {
-			printf(" ");
-		}
 		printf("\n");
 	}
 }
