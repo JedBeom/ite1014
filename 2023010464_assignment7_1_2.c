@@ -13,6 +13,7 @@ int main() {
 		} else if ('0' <= c && c <= '9') {
 			c = c;
 		} else {
+			printf("exit\n");
 			return 0;
 		}
 
