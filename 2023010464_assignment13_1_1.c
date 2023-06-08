@@ -66,11 +66,11 @@ int play() {
 	while (true) {
 		turn++;
 
-		if (turn%2==1) {
+		if (turn%2==1) { // computer turn: 1, 3, 5, 7, 9
 			picked = comPick(board);
 			printf("Computer move on '%d'\n", picked);
 			board[picked-1] = comSign;
-		} else {
+		} else { // player turn: 2, 4, 6, 8
 			printf("What is your next move? (1-9)\n");
 			scanf("%d", &picked);
 			board[picked-1] = playerSign;
@@ -129,10 +129,11 @@ int comPick(char *board) {
 	int i, j, comSignCnt, playerSignCnt;
 	int pickForBlock = 0;
 
-	// Rule 1, 2
+	// Rule 1(+Find cases that fit into Rule 2)
 	for (i=0; i<8; i++) { // winCondition[i][j]
 		playerSignCnt = comSignCnt = 0;
 
+		// fill targetSet 
 		for (j=0; j<3; j++) {
 			targetSet[j] = accessBoard(board, winCondition[i][j]);
 		}
@@ -142,7 +143,7 @@ int comPick(char *board) {
 			else if (targetSet[j] == comSign) comSignCnt++;
 		}
 
-		if (comSignCnt == 2) {
+		if (comSignCnt == 2 && playerSignCnt == 0) {
 			for (j=0; j<3; j++) {
 				if (targetSet[j] == ' ') {
 					return winCondition[i][j];
@@ -150,9 +151,10 @@ int comPick(char *board) {
 			}
 		}
 
-		if (playerSignCnt == 2) {
+		if (pickForBlock != 0 && playerSignCnt == 2 && comSignCnt == 0) {
 			for (j=0; j<3; j++) {
 				if (targetSet[j] == ' ') {
+					// save in order to keep priority
 					pickForBlock = winCondition[i][j];
 					break;
 				}
@@ -160,6 +162,7 @@ int comPick(char *board) {
 		}
 	}
 
+	// Execute Rule 2
 	if (pickForBlock != 0) return pickForBlock;
 
 	// Rule 3: 7, 3, 1, 9
